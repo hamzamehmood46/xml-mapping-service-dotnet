@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ACME's purchase-order format (what the partner sends us). -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="urn:acme:po" xmlns="urn:acme:po"
+           elementFormDefault="qualified">
+
+  <xs:element name="PurchaseOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Buyer">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Name" type="NonEmpty"/>
+              <xs:element name="Email" type="NonEmpty"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Items">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Item" maxOccurs="500">
+                <xs:complexType>
+                  <xs:attribute name="sku" type="NonEmpty" use="required"/>
+                  <xs:attribute name="qty" type="xs:positiveInteger" use="required"/>
+                  <xs:attribute name="price" use="required">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:decimal">
+                        <xs:minExclusive value="0"/>
+                        <xs:fractionDigits value="2"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="orderNo" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="PO-\d+"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="date" type="xs:date" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:simpleType name="NonEmpty">
+    <xs:restriction base="xs:string"><xs:minLength value="1"/></xs:restriction>
+  </xs:simpleType>
+</xs:schema>
