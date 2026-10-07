@@ -18,6 +18,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
 app.MapGet("/api/mappings", (MappingRegistry registry) => registry.Names.Order().ToArray())
    .WithSummary("Lists the configured partner mappings.");
 
