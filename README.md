@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/hamzamehmood46/xml-mapping-service-dotnet/actions/workflows/ci.yml/badge.svg)](https://github.com/hamzamehmood46/xml-mapping-service-dotnet/actions/workflows/ci.yml)
 
+**Live demo: [xml-mapping-service-dotnet.onrender.com/swagger](https://xml-mapping-service-dotnet.onrender.com/swagger)** (Swagger UI). Try GET /api/mappings, then POST /api/mappings/acme-po/transform with a partner XML. Hosted on Render's free tier, so the first load after idle can take about a minute; demo data resets on restart.
+
 A **.NET 8** service that converts a trading partner's XML into your internal format: **validate the input against the partner's XSD, transform with XSLT, then validate the output against your XSD.** Adding a new partner is a folder of three files, with no code changes.
 
 Partner integrations fail in two ways: the partner sends something malformed, or someone edits a mapping and quietly breaks the output. This service catches both *before* bad data reaches downstream systems.
